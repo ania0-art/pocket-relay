@@ -38,7 +38,8 @@
       "eslint"
     ]
   },
-  "pnpm": {    "patchedDependencies": {
+  "pnpm": {
+    "patchedDependencies": {
       "@larksuiteoapi/node-sdk@1.60.0": "patches/@larksuiteoapi__node-sdk@1.60.0.patch"
     },
     "onlyBuiltDependencies": [
