@@ -129,6 +129,12 @@ src/
 
 详见：`docs/05-claude-code-acp-executor.md`、`docs/08-integrated-session-management.md`
 
+## 代码规范
+
+- 格式化：`pnpm format`（Prettier）
+- Lint：`pnpm lint`（ESLint）
+- 详见根目录 `.prettierrc` 和 `eslint.config.js`
+
 ## 构建相关
 
 - 构建配置：根目录 `tsup.config.ts`（统一管理）

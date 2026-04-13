@@ -85,6 +85,8 @@ packages/
 |------|------|
 | `pnpm build` | 构建整个项目（根目录 tsup） |
 | `pnpm dev` | 监听模式构建（watch 所有源码变化） |
+| `pnpm lint` | ESLint 检查代码质量 |
+| `pnpm format` | Prettier 格式化所有源码 |
 | `npm link` | 链接到全局 |
 | `pcr --help` | 查看 CLI 帮助 |
 
@@ -95,7 +97,11 @@ packages/
 - `git pull` 已配置 `pull.rebase=true`，自动 rebase
 - GitHub 已开启 `Require linear history`
 
-## 构建配置说明
+## 代码规范
+
+- **格式化**: Prettier（`.prettierrc`）— 无分号、无尾逗号、单引号、100 字符宽度
+- **Lint**: ESLint（`eslint.config.js`）— typescript-eslint，格式规则由 `eslint-config-prettier` 关闭，两者无冲突
+- **职责分工**: Prettier 管格式，ESLint 管代码质量
 
 - tsup 配置：根目录 `tsup.config.ts`
 - 输出格式：CJS (`.cjs`)

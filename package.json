@@ -12,12 +12,17 @@
     "dev": "tsup --watch",
     "start": "node dist/index.cjs",
     "lint": "eslint \"packages/*/src/**/*.ts\"",
-    "format": "prettier --write \"packages/*/src/**/*.ts\""
+    "format": "prettier --write \"packages/*/src/**/*.ts\"",
+    "prepare": "husky"
   },
   "devDependencies": {
+    "@commitlint/cli": "^20.5.0",
+    "@commitlint/config-conventional": "^20.5.0",
     "@eslint/js": "^10.0.1",
     "eslint": "^10.2.0",
     "eslint-config-prettier": "^10.1.8",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
     "prettier": "^3.8.2",
     "tsup": "^8.0.0",
     "typescript": "^5.4.0",
@@ -26,8 +31,14 @@
   "dependencies": {
     "@agentclientprotocol/claude-agent-acp": "^0.26.0"
   },
-  "pnpm": {
-    "patchedDependencies": {
+  "lint-staged": {
+    "packages/*/src/**/*.ts": [
+      "prettier --write",
+      "eslint --fix",
+      "eslint"
+    ]
+  },
+  "pnpm": {    "patchedDependencies": {
       "@larksuiteoapi/node-sdk@1.60.0": "patches/@larksuiteoapi__node-sdk@1.60.0.patch"
     },
     "onlyBuiltDependencies": [
