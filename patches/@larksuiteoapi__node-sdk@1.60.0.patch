@@ -1,0 +1,28 @@
+diff --git a/es/index.js b/es/index.js
+index 56856bb5d93a02831e10010e34562882a5348ead..89d6227575c51f5349d84742b9cadc55567d9d7a 100644
+--- a/es/index.js
++++ b/es/index.js
+@@ -85629,7 +85629,8 @@ class WSClient {
+                 return;
+             }
+             this.eventDispatcher = eventDispatcher;
+-            this.reConnect(true);
++            this.logger.info('[ws]', '建立连接中......')
++            yield this.reConnect(true);
+         });
+     }
+ }
+diff --git a/lib/index.js b/lib/index.js
+index 77db05038171c07353d9e8f853f99ee69645d80c..ef2525ecdd224f6a1abfff956dcd7bf30011b0f4 100644
+--- a/lib/index.js
++++ b/lib/index.js
+@@ -85644,7 +85644,8 @@ class WSClient {
+                 return;
+             }
+             this.eventDispatcher = eventDispatcher;
+-            this.reConnect(true);
++            this.logger.info('[ws]', '建立连接中......')
++            yield this.reConnect(true);
+         });
+     }
+ }

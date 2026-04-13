@@ -1,0 +1,24 @@
+{
+  "name": "@pocket-relay/executor",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsdown src/index.ts --format esm,cjs --dts",
+    "dev": "tsdown src/index.ts --format esm,cjs --dts --watch"
+  },
+  "dependencies": {
+    "@agentclientprotocol/claude-agent-acp": "^0.26.0",
+    "@agentclientprotocol/sdk": "0.18.1",
+    "@pocket-relay/types": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.4.0"
+  }
+}

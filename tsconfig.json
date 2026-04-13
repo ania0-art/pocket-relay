@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@pocket-relay/*": ["packages/*/src"]
+    }
+  },
+  "references": [
+    { "path": "packages/types" },
+    { "path": "packages/executor" },
+    { "path": "packages/channel" },
+    { "path": "packages/core" }
+  ]
+}

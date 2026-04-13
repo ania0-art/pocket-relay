@@ -1,0 +1,31 @@
+{
+  "name": "pocket-relay",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "pcr": "./dist/index.cjs",
+    "pocket-relay": "./dist/index.cjs"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "start": "node dist/index.cjs"
+  },
+  "devDependencies": {
+    "tsup": "^8.0.0",
+    "typescript": "^5.4.0"
+  },
+  "dependencies": {
+    "@agentclientprotocol/claude-agent-acp": "^0.26.0"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "@larksuiteoapi/node-sdk@1.60.0": "patches/@larksuiteoapi__node-sdk@1.60.0.patch"
+    },
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "protobufjs"
+    ]
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(lark-cli docs:*)",
+      "Bash(lark-cli drive:*)",
+      "WebFetch(domain:github.com)",
+      "WebSearch",
+      "WebFetch(domain:www.npmjs.com)",
+      "WebFetch(domain:docs.anthropic.com)",
+      "Bash(pnpm --filter @pocket-relay/core build)",
+      "Bash(pnpm build:*)",
+      "Bash(pnpm install:*)",
+      "Bash(npm unlink:*)",
+      "Bash(npm link:*)",
+      "Bash(npx tsc:*)",
+      "Bash(node packages/core/dist/index.cjs --help)",
+      "WebFetch(domain:open.larksuite.com)",
+      "WebFetch(domain:deepwiki.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(xargs grep:*)",
+      "WebFetch(domain:open.feishu.cn)"
+    ]
+  },
+  "spinnerTipsEnabled": true
+}
