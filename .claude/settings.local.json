@@ -18,7 +18,11 @@
       "WebFetch(domain:deepwiki.com)",
       "WebFetch(domain:raw.githubusercontent.com)",
       "Bash(xargs grep:*)",
-      "WebFetch(domain:open.feishu.cn)"
+      "WebFetch(domain:open.feishu.cn)",
+      "Bash(pnpm add:*)",
+      "Bash(pnpm lint:*)",
+      "Bash(pnpm prettier:*)",
+      "Bash(pnpm format:*)"
     ]
   },
   "spinnerTipsEnabled": true

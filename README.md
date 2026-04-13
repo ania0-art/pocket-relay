@@ -53,7 +53,7 @@ PocketRelay/
 
 ```bash
 # Clone the repository
-git clone <repo-url>
+git clone https://github.com/noetikalab/pocket-relay.git
 cd PocketRelay
 
 # Install dependencies
@@ -88,13 +88,14 @@ pcr start
 # Send "/bind <node-id>" in Feishu to bind
 ```
 
-### Feishu Commands
+### Slash Commands
 
 | Command | Description |
 |---------|-------------|
 | `/bind <node-id>` | Bind current chat to PCR process |
 | `/new` | Create new agent session |
 | `/resume <session-id>` | Resume specific agent session |
+| `/session-list [limit]` | List Claude Code sessions |
 | Any text | Execute as agent task |
 
 ### CLI Commands
@@ -165,7 +166,7 @@ PocketRelay/
 
 ```bash
 # 克隆仓库
-git clone <repo-url>
+git clone https://github.com/noetikalab/pocket-relay.git
 cd PocketRelay
 
 # 安装依赖
@@ -200,13 +201,14 @@ pcr start
 # 在飞书中发送 "/bind <node-id>" 完成绑定
 ```
 
-### 飞书命令
+### 斜线命令
 
 | 命令 | 说明 |
 |------|------|
 | `/bind <node-id>` | 将当前聊天绑定到 PCR 进程 |
 | `/new` | 创建新的 Agent 会话 |
 | `/resume <session-id>` | 恢复指定的 Agent 会话 |
+| `/session-list [limit]` | 列出 Claude Code 会话 |
 | 任意文本 | 作为 Agent 任务执行 |
 
 ### CLI 命令

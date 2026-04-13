@@ -1,6 +1,6 @@
-import type { ExecutionChunk, ExecutionResult, ExecutorConfig } from '@pocket-relay/types';
-import type { IExecutor, ExecuteOptions } from '../IExecutor.js';
-import { SpawnExecutor, type SpawnChunk } from '../spawn/SpawnExecutor.js';
+import type { ExecutionChunk, ExecutionResult, ExecutorConfig } from '@pocket-relay/types'
+import type { IExecutor, ExecuteOptions } from '../IExecutor.js'
+import { SpawnExecutor, type SpawnChunk } from '../spawn/SpawnExecutor.js'
 
 /**
  * Claude Code Spawn 模式执行器。
@@ -10,32 +10,32 @@ import { SpawnExecutor, type SpawnChunk } from '../spawn/SpawnExecutor.js';
  * 需要交互审批时请使用 ClaudeCodeAcpExecutor。
  */
 export class ClaudeCodeExecutor implements IExecutor {
-  private readonly config: ExecutorConfig;
-  private readonly spawnExecutor = new SpawnExecutor();
+  private readonly config: ExecutorConfig
+  private readonly spawnExecutor = new SpawnExecutor()
 
   constructor(config: ExecutorConfig) {
-    this.config = config;
+    this.config = config
   }
 
   async execute(
     taskId: string,
     prompt: string,
     onChunk: (chunk: ExecutionChunk) => void,
-    options?: ExecuteOptions,
+    options?: ExecuteOptions
   ): Promise<ExecutionResult> {
-    const args: string[] = ['-p', '--dangerously-skip-permissions'];
+    const args: string[] = ['-p', '--dangerously-skip-permissions']
 
     if (options?.createNewSession) {
       // 不传 --continue 或 --resume，Claude 会自动创建新会话
     } else if (options?.claudeSessionId) {
-      args.push('--resume', options.claudeSessionId);
+      args.push('--resume', options.claudeSessionId)
     } else {
-      args.push('--continue'); // 默认继续最新会话
+      args.push('--continue') // 默认继续最新会话
     }
 
-    args.push(prompt);
+    args.push(prompt)
 
-    console.log('[ClaudeCodeExecutor] 执行命令:', this.config.claudeBin, args.join(' '));
+    console.log('[ClaudeCodeExecutor] 执行命令:', this.config.claudeBin, args.join(' '))
 
     const spawnResult = await this.spawnExecutor.execute(
       taskId,
@@ -43,27 +43,27 @@ export class ClaudeCodeExecutor implements IExecutor {
         command: this.config.claudeBin,
         args,
         cwd: this.config.cwd,
-        timeoutMs: this.config.timeoutMs,
+        timeoutMs: this.config.timeoutMs
       },
       (chunk: SpawnChunk) => {
         onChunk({
           taskId,
           type: chunk.type,
-          data: chunk.data,
-        });
-      },
-    );
+          data: chunk.data
+        })
+      }
+    )
 
     return {
       taskId,
       exitCode: spawnResult.exitCode,
       fullOutput: spawnResult.fullOutput,
       durationMs: spawnResult.durationMs,
-      timedOut: spawnResult.timedOut,
-    };
+      timedOut: spawnResult.timedOut
+    }
   }
 
   cancel(taskId: string): void {
-    this.spawnExecutor.cancel(taskId);
+    this.spawnExecutor.cancel(taskId)
   }
 }

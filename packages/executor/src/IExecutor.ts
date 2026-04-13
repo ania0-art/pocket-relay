@@ -1,10 +1,10 @@
-import type { ExecutionChunk, ExecutionResult } from '@pocket-relay/types';
+import type { ExecutionChunk, ExecutionResult } from '@pocket-relay/types'
 
 export interface ExecuteOptions {
   /** 恢复指定 Claude Code 会话，不传则新建 */
-  claudeSessionId?: string;
+  claudeSessionId?: string
   /** 强制创建新会话（忽略 claudeSessionId） */
-  createNewSession?: boolean;
+  createNewSession?: boolean
 }
 
 /**
@@ -20,8 +20,8 @@ export interface IExecutor {
     taskId: string,
     prompt: string,
     onChunk: (chunk: ExecutionChunk) => void,
-    options?: ExecuteOptions,
-  ): Promise<ExecutionResult>;
+    options?: ExecuteOptions
+  ): Promise<ExecutionResult>
 
-  cancel(taskId: string): void;
+  cancel(taskId: string): void
 }

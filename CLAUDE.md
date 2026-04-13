@@ -88,6 +88,13 @@ packages/
 | `npm link` | 链接到全局 |
 | `pcr --help` | 查看 CLI 帮助 |
 
+## Git 工作流
+
+- 主干开发模式，唯一长期分支：`main`
+- 必须使用 rebase 方式，禁止 merge commit
+- `git pull` 已配置 `pull.rebase=true`，自动 rebase
+- GitHub 已开启 `Require linear history`
+
 ## 构建配置说明
 
 - tsup 配置：根目录 `tsup.config.ts`

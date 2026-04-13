@@ -1,5 +1,5 @@
-import { nanoid } from 'nanoid';
-import type { Session, SessionStatus } from '@pocket-relay/types';
+import { nanoid } from 'nanoid'
+import type { Session, SessionStatus } from '@pocket-relay/types'
 
 /**
  * 管理飞书 chatId 到 PocketRelay Session 的映射（内存存储，进程重启后丢失）。
@@ -8,25 +8,25 @@ import type { Session, SessionStatus } from '@pocket-relay/types';
  * Claude Code 的会话 ID 存储在 `session.claudeSessionId` 字段中。
  */
 export class SessionManager {
-  private sessions = new Map<string, Session>(); // chatId -> Session
+  private sessions = new Map<string, Session>() // chatId -> Session
 
   /**
    * 获取或创建一个会话（每个 chatId 对应一个）
    */
   getOrCreate(chatId: string): Session {
-    let session = this.sessions.get(chatId);
+    let session = this.sessions.get(chatId)
     if (!session) {
       session = {
         id: nanoid(),
         chatId,
         status: 'idle',
         createdAt: Date.now(),
-        lastActiveAt: Date.now(),
-      };
-      this.sessions.set(chatId, session);
+        lastActiveAt: Date.now()
+      }
+      this.sessions.set(chatId, session)
     }
-    session.lastActiveAt = Date.now();
-    return session;
+    session.lastActiveAt = Date.now()
+    return session
   }
 
   /**
@@ -39,28 +39,28 @@ export class SessionManager {
       chatId,
       status: 'idle',
       createdAt: Date.now(),
-      lastActiveAt: Date.now(),
-    };
-    this.sessions.set(chatId, session);
-    return session;
+      lastActiveAt: Date.now()
+    }
+    this.sessions.set(chatId, session)
+    return session
   }
 
   getByChatId(chatId: string): Session | undefined {
-    return this.sessions.get(chatId);
+    return this.sessions.get(chatId)
   }
 
   setStatus(chatId: string, status: SessionStatus): void {
-    const session = this.sessions.get(chatId);
+    const session = this.sessions.get(chatId)
     if (session) {
-      session.status = status;
+      session.status = status
     }
   }
 
   /** 绑定 Claude Code 会话 ID，后续任务将恢复该会话 */
   setClaudeSessionId(chatId: string, claudeSessionId: string): void {
-    const session = this.sessions.get(chatId);
+    const session = this.sessions.get(chatId)
     if (session) {
-      session.claudeSessionId = claudeSessionId;
+      session.claudeSessionId = claudeSessionId
     }
   }
 }

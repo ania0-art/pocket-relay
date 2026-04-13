@@ -1,22 +1,22 @@
-import { spawn, type ChildProcess } from 'node:child_process';
+import { spawn, type ChildProcess } from 'node:child_process'
 
 export interface SpawnOptions {
-  command: string;
-  args: string[];
-  cwd?: string;
-  timeoutMs?: number;
+  command: string
+  args: string[]
+  cwd?: string
+  timeoutMs?: number
 }
 
 export interface SpawnResult {
-  exitCode: number | null;
-  fullOutput: string;
-  durationMs: number;
-  timedOut: boolean;
+  exitCode: number | null
+  fullOutput: string
+  durationMs: number
+  timedOut: boolean
 }
 
 export interface SpawnChunk {
-  type: 'stdout' | 'stderr';
-  data: string;
+  type: 'stdout' | 'stderr'
+  data: string
 }
 
 /**
@@ -24,7 +24,7 @@ export interface SpawnChunk {
  * CLI 类 Agent（ClaudeCodeExecutor 等）基于此类实现，避免重复写 spawn 逻辑。
  */
 export class SpawnExecutor {
-  private activeProcesses = new Map<string, ChildProcess>();
+  private activeProcesses = new Map<string, ChildProcess>()
 
   /**
    * 执行命令
@@ -35,70 +35,70 @@ export class SpawnExecutor {
   async execute(
     taskId: string,
     options: SpawnOptions,
-    onChunk: (chunk: SpawnChunk) => void,
+    onChunk: (chunk: SpawnChunk) => void
   ): Promise<SpawnResult> {
-    const startTime = Date.now();
-    let fullOutput = '';
-    let timedOut = false;
+    const startTime = Date.now()
+    let fullOutput = ''
+    let timedOut = false
 
     const child = spawn(options.command, options.args, {
       cwd: options.cwd ?? process.cwd(),
       stdio: ['ignore', 'pipe', 'pipe'],
-      shell: false,
-    });
+      shell: false
+    })
 
-    this.activeProcesses.set(taskId, child);
+    this.activeProcesses.set(taskId, child)
 
     const timeoutHandle = options.timeoutMs
       ? setTimeout(() => {
-          timedOut = true;
-          this.cancel(taskId);
+          timedOut = true
+          this.cancel(taskId)
         }, options.timeoutMs)
-      : null;
+      : null
 
-    child.stdout.setEncoding('utf-8');
-    child.stderr.setEncoding('utf-8');
+    child.stdout.setEncoding('utf-8')
+    child.stderr.setEncoding('utf-8')
 
     child.stdout.on('data', (data: string) => {
-      fullOutput += data;
-      onChunk({ type: 'stdout', data });
-    });
+      fullOutput += data
+      onChunk({ type: 'stdout', data })
+    })
 
     child.stderr.on('data', (data: string) => {
-      fullOutput += data;
-      onChunk({ type: 'stderr', data });
-    });
+      fullOutput += data
+      onChunk({ type: 'stderr', data })
+    })
 
-    const exitCode = await new Promise<number | null>((resolve) => {
-      child.on('close', (code) => resolve(code));
-      child.on('error', (err) => {
-        fullOutput += `\n[spawn error] ${err.message}`;
-        resolve(null);
-      });
-    });
+    const exitCode = await new Promise<number | null>(resolve => {
+      child.on('close', code => resolve(code))
+      child.on('error', err => {
+        fullOutput += `\n[spawn error] ${err.message}`
+        resolve(null)
+      })
+    })
 
-    if (timeoutHandle) clearTimeout(timeoutHandle);
-    this.activeProcesses.delete(taskId);
+    if (timeoutHandle) clearTimeout(timeoutHandle)
+    this.activeProcesses.delete(taskId)
 
     return {
       exitCode,
       fullOutput,
       durationMs: Date.now() - startTime,
-      timedOut,
-    };
+      timedOut
+    }
   }
 
   /** 发送 SIGTERM，3 秒后若进程仍存在则强制 SIGKILL */
   cancel(taskId: string): void {
-    const child = this.activeProcesses.get(taskId);
-    if (!child) return;
+    const child = this.activeProcesses.get(taskId)
+    if (!child) return
 
-    child.kill('SIGTERM');
+    child.kill('SIGTERM')
 
     setTimeout(() => {
       if (this.activeProcesses.has(taskId)) {
-        child.kill('SIGKILL');
+        child.kill('SIGKILL')
       }
-    }, 3000);
+    }, 3000)
   }
 }
