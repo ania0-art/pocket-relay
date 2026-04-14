@@ -145,3 +145,13 @@ The executor layer supports multiple execution modes:
 - **ACP mode** (`ClaudeCodeAcpExecutor`): Long-running process, supports permission approval and progress updates via callbacks
 
 **必读**: 每个子包下的 `AGENTS.md`
+
+## Claude Code Skills
+
+项目内置 skills 存放于 `.claude/skills/`，在 Claude Code 中可直接通过 `/skill-name` 触发。
+
+| Skill | 触发方式 | 说明 |
+|-------|---------|------|
+| `/commit` | "帮我提交"、"commit 一下" | 分析变更，生成 Conventional Commits 格式提交 |
+| `/pr-create` | "创建 PR"、"提 PR" | 基于分支差异生成 PR 标题和描述，用户确认后创建 |
+| `/sync-docs` | "更新文档"、"同步文档" | 根据本次工作内容同步更新 CLAUDE.md、AGENTS.md、README.md、docs/ |
