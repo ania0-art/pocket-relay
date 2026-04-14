@@ -2,3 +2,4 @@ node_modules/
 dist/
 .env.pcr
 *.local
+.claude/settings.local.json
