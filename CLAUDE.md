@@ -44,7 +44,7 @@ packages/
 ### 2. 目录结构规范
 - **cli/** - 只放 `pcr xxx` CLI 命令
 - **daemon/** - 只放 Daemon 相关和飞书斜线命令（`/xxx`）
-- **daemon/commands/** - 飞书斜线命令必须实现 `IFeishuCommand` 接口
+- **daemon/commands/** - 斜线命令必须实现 `IDaemonCommand` 接口
 - **禁止**: 命令通过接口访问 Daemon，**不能直接访问私有方法**
 
 ### 3. 斜线命令规范
@@ -102,11 +102,16 @@ packages/
 - **格式化**: Prettier（`.prettierrc`）— 无分号、无尾逗号、单引号、100 字符宽度
 - **Lint**: ESLint（`eslint.config.js`）— typescript-eslint，格式规则由 `eslint-config-prettier` 关闭，两者无冲突
 - **职责分工**: Prettier 管格式，ESLint 管代码质量
+- **Git hooks**: husky + lint-staged（pre-commit 自动 format/fix/lint）+ commitlint（commit-msg 校验 Conventional Commits）
+- **Commit 格式**: `type(scope): subject`，type 枚举：feat/fix/docs/style/refactor/test/chore/perf
 
-- tsup 配置：根目录 `tsup.config.ts`
+## 构建规范
+
+- tsup 配置：根目录 `tsup.config.ts`（统一管理，子包无独立构建配置）
 - 输出格式：CJS (`.cjs`)
 - 输出文件：`dist/index.cjs`（根目录）
-- 关键配置：`noExternal: [/@pocket-relay\//]` - 强制 bundle 所有 workspace 包
+- 关键配置：`noExternal: [/@pocket-relay\//]` — 强制 bundle 所有 workspace 包
+- Shebang：通过 `esbuildOptions.banner.js` 注入，不在源码里写
 
 ## Multi-Agent Architecture (多 Agent 架构)
 
@@ -136,7 +141,7 @@ To add support for a new agent (e.g., Codex):
 ### Execution Modes
 
 The executor layer supports multiple execution modes:
-- **Non-interactive mode**: One-shot task execution (current implementation)
-- **ACP interactive mode**: Interactive agent communication (planned)
+- **Spawn mode** (`ClaudeCodeExecutor`): One-shot task execution, new process per task
+- **ACP mode** (`ClaudeCodeAcpExecutor`): Long-running process, supports permission approval and progress updates via callbacks
 
 **必读**: 每个子包下的 `AGENTS.md`

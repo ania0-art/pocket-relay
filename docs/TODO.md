@@ -5,9 +5,9 @@
 ### 工程化（发布前准备）
 
 - [x] **构建系统升级** — tsup 配置提升到根目录 `tsup.config.ts`，`pnpm build`/`pnpm dev` 在根目录统一运行
-- [ ] **发布到 GitHub** — 初始化仓库，配置协作开发流程（branch 策略、PR 模板等）
-- [ ] **ESLint + Prettier** — 统一代码风格，配置到 monorepo 根目录
-- [ ] **Git hooks** — husky + lint-staged，commit 前自动执行 lint/format 校验
+- [x] **发布到 GitHub** — org: noetikalab，repo: pocket-relay，主干开发 + rebase 工作流，GitHub 已开启 Require linear history
+- [x] **ESLint + Prettier** — 根目录 `eslint.config.js` + `.prettierrc`，职责分工：Prettier 管格式，ESLint 管代码质量
+- [x] **Git hooks** — husky + lint-staged + commitlint，pre-commit 自动 format/lint，commit-msg 校验 Conventional Commits 格式
 - [ ] **Claude Code Agent Skills** — 基于 `gh` CLI 制作通用 git 管理 skills（`/commit`、`/pr-create` 等），存放到 `~/.claude/skills/`
 
 ### 功能规划

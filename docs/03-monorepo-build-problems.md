@@ -39,10 +39,11 @@
 ## 最终构建配置
 
 ```typescript
-// packages/core/tsup.config.ts
+// tsup.config.ts（根目录，统一管理所有子包构建）
 export default defineConfig({
-  entry: ['src/cli.ts'],
+  entry: ['packages/core/src/index.ts'],
   format: ['cjs'],
+  outDir: './dist',
   outExtension: () => ({ js: '.cjs' }),
   noExternal: [/@pocket-relay\//],
   // ...

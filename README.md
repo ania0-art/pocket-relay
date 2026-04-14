@@ -103,7 +103,8 @@ pcr start
 | Command | Description |
 |---------|-------------|
 | `pcr` | Show help |
-| `pcr start` | Start PocketRelay daemon |
+| `pcr start` | Start PocketRelay daemon (Spawn mode) |
+| `pcr start --executor-mode acp` | Start PocketRelay daemon (ACP interactive mode) |
 | `pcr config list` | List all configs |
 | `pcr config set <key> <value>` | Set config |
 | `pcr config get <key>` | Get config |
@@ -216,7 +217,8 @@ pcr start
 | 命令 | 说明 |
 |------|------|
 | `pcr` | 显示帮助 |
-| `pcr start` | 启动 PocketRelay 守护进程 |
+| `pcr start` | 启动 PocketRelay 守护进程（Spawn 模式） |
+| `pcr start --executor-mode acp` | 启动 PocketRelay 守护进程（ACP 交互模式） |
 | `pcr config list` | 列出所有配置 |
 | `pcr config set <key> <value>` | 设置配置 |
 | `pcr config get <key>` | 查看配置 |
