@@ -154,4 +154,5 @@ The executor layer supports multiple execution modes:
 |-------|---------|------|
 | `/commit` | "帮我提交"、"commit 一下" | 分析变更，生成 Conventional Commits 格式提交 |
 | `/pr-create` | "创建 PR"、"提 PR" | 基于分支差异生成 PR 标题和描述，用户确认后创建 |
+| `/pr-fix-comments` | "处理 PR 评论"、"fix comments" | 拉取未解决 review 评论，分析问题给出方案，询问用户是否修复 |
 | `/sync-docs` | "更新文档"、"同步文档" | 根据本次工作内容同步更新 CLAUDE.md、AGENTS.md、README.md、docs/ |
