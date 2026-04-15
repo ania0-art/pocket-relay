@@ -28,11 +28,11 @@ export class SessionListCommand implements IDaemonCommand {
       }
 
       const currentSession = ctx.sessionManager.getByChatId(msg.chatId)
-      const currentClaudeSessionId = currentSession?.claudeSessionId
+      const currentAgentSessionId = currentSession?.agentSessionId
 
-      let message = 'Claude Code 会话列表\n\n'
+      let message = 'Agent 会话列表\n\n'
       sessions.forEach((session, index) => {
-        const isCurrent = session.sessionId === currentClaudeSessionId
+        const isCurrent = session.sessionId === currentAgentSessionId
         const marker = isCurrent ? '>> ' : '   '
         const date = new Date(session.updatedAt).toLocaleString('zh-CN')
 

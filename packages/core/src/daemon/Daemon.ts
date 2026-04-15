@@ -176,12 +176,12 @@ export class Daemon {
     }
 
     const executeOptions: ExecuteOptions = {}
-    if (!session.claudeSessionId) {
-      // 首次对话或 /new 之后，claudeSessionId 为空，强制新建 Claude 会话
+    if (!session.agentSessionId) {
+      // 首次对话或 /new 之后，agentSessionId 为空，强制新建 Agent 会话
       executeOptions.createNewSession = true
     } else {
       // 已有会话 ID，恢复上次对话上下文
-      executeOptions.claudeSessionId = session.claudeSessionId
+      executeOptions.agentSessionId = session.agentSessionId
     }
 
     const position = this.taskQueue.enqueue(task, executeOptions)

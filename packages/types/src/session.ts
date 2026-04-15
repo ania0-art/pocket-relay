@@ -3,7 +3,7 @@ export type SessionStatus = 'idle' | 'busy'
 export interface Session {
   id: string // PocketRelay 内部会话 ID
   chatId: string // 飞书 chat_id
-  claudeSessionId?: string // Claude Code 的会话 ID（如果有）
+  agentSessionId?: string // Agent 的会话 ID（如果有，支持 Claude Code、Codex 等）
   status: SessionStatus
   createdAt: number
   lastActiveAt: number

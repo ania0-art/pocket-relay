@@ -75,13 +75,13 @@ export class ClaudeCodeAcpExecutor implements IExecutor {
       // 根据 options 决定新建还是恢复会话
       // 注意：loadSession 会通过 sessionUpdate 重放历史对话，activeTasks 需在之后注册
       let sessionId: string
-      if (options?.claudeSessionId) {
+      if (options?.agentSessionId) {
         await conn.loadSession({
-          sessionId: options.claudeSessionId,
+          sessionId: options.agentSessionId,
           cwd: this.config.cwd,
           mcpServers: []
         })
-        sessionId = options.claudeSessionId
+        sessionId = options.agentSessionId
       } else {
         const resp = await conn.newSession({ cwd: this.config.cwd, mcpServers: [] })
         sessionId = resp.sessionId

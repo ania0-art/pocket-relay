@@ -1,9 +1,9 @@
 import type { ExecutionChunk, ExecutionResult } from '@pocket-relay/types'
 
 export interface ExecuteOptions {
-  /** 恢复指定 Claude Code 会话，不传则新建 */
-  claudeSessionId?: string
-  /** 强制创建新会话（忽略 claudeSessionId） */
+  /** 恢复指定 Agent 会话 ID，不传则新建（支持 Claude Code、Codex 等） */
+  agentSessionId?: string
+  /** 强制创建新会话（忽略 agentSessionId） */
   createNewSession?: boolean
 }
 

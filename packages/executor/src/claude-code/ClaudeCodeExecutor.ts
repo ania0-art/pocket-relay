@@ -27,8 +27,8 @@ export class ClaudeCodeExecutor implements IExecutor {
 
     if (options?.createNewSession) {
       // 不传 --continue 或 --resume，Claude 会自动创建新会话
-    } else if (options?.claudeSessionId) {
-      args.push('--resume', options.claudeSessionId)
+    } else if (options?.agentSessionId) {
+      args.push('--resume', options.agentSessionId)
     } else {
       args.push('--continue') // 默认继续最新会话
     }

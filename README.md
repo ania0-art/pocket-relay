@@ -24,11 +24,10 @@ PocketRelay is a CLI tool that lets you control code agents (like Claude Code, C
 
 - 📱 **Mobile Control**: Send commands from Feishu mobile app
 - 🤖 **Multi-Agent Support**: Extensible architecture for Claude Code, Codex, and other code agents
-- 🔗 **Multiple Sessions**: Support binding multiple Feishu chats to one PCR process
-- 🔄 **Session Management**: `/new` to create new sessions, `/resume` to continue existing ones
+- 🔗 **Session Switching**: Switch between different agent sessions per chat (`/new`, `/resume`)
+- 🔄 **Session Management**: `/session-list` to browse sessions, `/resume <id>` to switch
 - ⚡ **Task Queue**: Queue multiple tasks and execute them sequentially
 - 🛡️ **Idempotent**: Duplicate messages are automatically ignored
-- 🎯 **Switchable PCR Processes**: Bind different PCR processes for different projects
 
 ### Architecture
 
@@ -138,11 +137,10 @@ PocketRelay 是一个 CLI 工具，让你可以通过飞书手机应用控制代
 
 - 📱 **手机控制**：从飞书手机应用发送命令
 - 🤖 **多 Agent 支持**：可扩展架构，支持 Claude Code、Codex 等多种代码 Agent
-- 🔗 **多会话支持**：支持将多个飞书聊天绑定到一个 PCR 进程
-- 🔄 **会话管理**：`/new` 创建新会话，`/resume` 继续已有会话
+- 🔗 **会话切换**：每个飞书聊天可独立切换 Agent 历史会话（`/new` 新建、`/resume` 恢复）
+- 🔄 **会话管理**：`/session-list` 浏览历史会话，`/resume <id>` 切换到指定会话
 - ⚡ **任务队列**：多个任务排队顺序执行
 - 🛡️ **幂等处理**：自动忽略重复消息
-- 🎯 **可切换 PCR 进程**：为不同项目绑定不同的 PCR 进程
 
 ### 架构
 

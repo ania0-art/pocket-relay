@@ -23,7 +23,7 @@ src/
     ├── TaskQueue.ts
     └── commands/          # 飞书斜线命令
         ├── index.ts
-        ├── IFeishuCommand.ts  # 接口（必读）
+        ├── IDaemonCommand.ts  # 接口（必读）
         ├── BindCommand.ts
         ├── NewCommand.ts
         ├── ResumeCommand.ts
@@ -59,7 +59,7 @@ src/
 接收飞书消息
   → 命令匹配（/bind /new /resume /session-list）
   → 或 TaskQueue 排队
-  → SessionManager 获取 claudeSessionId
+  → SessionManager 获取 agentSessionId
   → 调用 Executor（Spawn 或 ACP）
   → ACP 模式：通过 Channel 处理权限审批/进度通知
   → OutputBuffer → 回复飞书
@@ -83,9 +83,9 @@ src/
 | 命令 | 说明 |
 |------|------|
 | `/bind <node-id>` | 绑定当前飞书会话到此 Daemon |
-| `/new` | 创建新 Claude 会话（清除 claudeSessionId） |
-| `/resume <session-id>` | 恢复指定 Claude 会话 |
-| `/session-list [limit]` | 列出 Claude Code 会话（也支持 `/sessions`） |
+| `/new` | 创建新 Agent 会话（清除 agentSessionId） |
+| `/resume <session-id>` | 恢复指定 Agent 会话 |
+| `/session-list [limit]` | 列出 Agent 会话（也支持 `/sessions`） |
 
 ## 关键概念：三种 ID
 
@@ -93,7 +93,7 @@ src/
 |---------|------|------|
 | `chatId` | 飞书 | 标识飞书聊天，用于回复消息 |
 | `sessionId` (PocketRelay) | nanoid 生成 | PocketRelay 内部会话标识 |
-| `claudeSessionId` | Claude Code | Claude Code 会话复用，per-chatId 存储 |
+| `agentSessionId` | Claude Code / Codex 等 | Agent 会话复用，per-chatId 存储 |
 
 详见：`docs/04-session-chat-id-explained.md`
 
