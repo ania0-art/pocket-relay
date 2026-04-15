@@ -17,6 +17,7 @@ export function registerStartCommand(program: Command): void {
     .option('--claude-cwd <path>', 'Claude Code 工作目录')
     .option('--task-timeout-ms <ms>', '任务超时时间（毫秒）')
     .option('--executor-mode <mode>', '执行器模式：spawn（默认）或 acp（交互模式）', 'spawn')
+    .option('--channel <type>', '通信通道类型：lark（默认）', 'lark')
     .action(startAction)
 }
 
@@ -26,10 +27,10 @@ async function startAction(options: any) {
   const localConfig = loadLocalConfig(cwd)
   const config = mergeConfig(globalConfig, localConfig, options)
 
-  // 验证必填配置
-  if (!config.larkAppId || !config.larkAppSecret) {
+  // 验证必填配置（按 channel 类型）
+  if (channelType === 'lark' && (!config.larkAppId || !config.larkAppSecret)) {
     console.log('')
-    logError('缺少飞书配置')
+    logError('缺少 Lark 配置')
     console.log('')
     console.log('  请用以下任一方式配置:')
     console.log('')
@@ -49,6 +50,14 @@ async function startAction(options: any) {
   const claudeCwd = config.claudeCwd ?? cwd
   const timeoutMs = config.taskTimeoutMs!
   const executorMode: string = options.executorMode ?? 'spawn'
+  const channelType: string = options.channel ?? 'lark'
+
+  // 检查 channel 是否支持
+  const supportedChannels = ['lark']
+  if (!supportedChannels.includes(channelType)) {
+    logError(`通道 "${channelType}" 暂未实现，当前支持：${supportedChannels.join(', ')}`)
+    process.exit(1)
+  }
 
   // 检查 claude 安装（spawn 模式才需要）
   function checkClaudeInstallation(bin: string): boolean {
@@ -80,7 +89,7 @@ async function startAction(options: any) {
   }
 
   // 初始化组件
-  logInfo('初始化飞书连接...')
+  logInfo(`初始化 ${channelType} 连接...`)
   const channel = new LarkChannel({
     appId: config.larkAppId!,
     appSecret: config.larkAppSecret!
@@ -98,7 +107,7 @@ async function startAction(options: any) {
 
   const daemon = new Daemon(channel, executor, claudeCwd)
 
-  logInfo('正在连接飞书...')
+  logInfo(`正在连接 ${channelType}...`)
   console.log('')
 
   await daemon.start()
@@ -109,7 +118,7 @@ async function startAction(options: any) {
   console.log('')
   console.log(colors.bold(`  Node ID: ${colors.cyan(daemon.nodeId)}`))
   console.log('')
-  console.log('  在飞书中发送以下命令完成绑定:')
+  console.log('  在 IM 中发送以下命令完成绑定:')
   console.log(colors.yellow(`    /bind ${daemon.nodeId}`))
   console.log('')
   console.log(`  工作目录: ${claudeCwd}`)

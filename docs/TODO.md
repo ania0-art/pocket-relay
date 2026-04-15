@@ -12,10 +12,7 @@
 
 ### 功能规划
 
-- [ ] **CLI channel 选择** — `pcr start --channel lark|telegram|discord|wechat`
-  - 启动日志去掉硬编码的"飞书"字样，改为通用提示
-  - 新增 `pcr channel` 命令用于配置默认 channel
-  - 详见：`packages/core/src/cli/start.ts`（当前日志全部硬编码为飞书）
+- [x] **CLI channel 选择** — `pcr start --channel lark`，启动日志去掉硬编码"飞书"字样，改为通用提示
 
 - [ ] **飞书卡片知识库文档整理** — 将 `docs/10-feishu-card-sdk-guide.md` 的经验进一步结构化，便于其他 agent/同事接力（低优先级）
 
