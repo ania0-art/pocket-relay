@@ -1,5 +1,5 @@
 ---
-name: new-branch
+name: project-new-branch
 description: 开始新功能或修复前的标准流程：同步 main、切新分支、推送到远程。当用户说"开始新功能"、"切分支"、"新建分支"、"开始开发"、"new branch"或输入 /new-branch 时触发。
 ---
 

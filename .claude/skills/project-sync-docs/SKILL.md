@@ -1,5 +1,5 @@
 ---
-name: sync-docs
+name: project-sync-docs
 description: 根据本次工作内容，同步更新项目文档，保持文档与代码实现一致。当用户说"更新文档"、"同步文档"、"文档过时了"、"更新 CLAUDE.md"、"更新 AGENTS.md"、"更新 README"或输入 /sync-docs 时触发。完成功能开发、bug 修复、架构调整后也应主动提示使用。
 ---
 

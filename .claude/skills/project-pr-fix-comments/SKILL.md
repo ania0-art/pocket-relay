@@ -1,5 +1,5 @@
 ---
-name: pr-fix-comments
+name: project-pr-fix-comments
 description: 拉取当前 PR 所有未解决的 review 评论，分析问题并给出解决方案，询问用户是否修复。当用户说"处理 PR 评论"、"修复 review 意见"、"fix comments"、"解决评论"或输入 /pr-fix-comments 时触发。
 ---
 
