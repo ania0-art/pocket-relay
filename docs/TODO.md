@@ -8,14 +8,11 @@
 - [x] **发布到 GitHub** — org: noetikalab，repo: pocket-relay，主干开发 + rebase 工作流，GitHub 已开启 Require linear history
 - [x] **ESLint + Prettier** — 根目录 `eslint.config.js` + `.prettierrc`，职责分工：Prettier 管格式，ESLint 管代码质量
 - [x] **Git hooks** — husky + lint-staged + commitlint，pre-commit 自动 format/lint，commit-msg 校验 Conventional Commits 格式
-- [x] **Claude Code Agent Skills** — 基于 `gh` CLI 制作 `/commit`、`/pr-create` skills，存放到项目 `.claude/skills/`
+- [x] **Claude Code Agent Skills** — 制作 7 个项目级 skill（`project-commit`、`project-pr-create`、`project-pr-fix-comments`、`project-new-branch`、`project-sync-docs`、`project-ts-init`、`project-ts-audit`），存放于 `.claude/skills/`，统一使用 `project-` 前缀以区分用户级 skill
 
 ### 功能规划
 
-- [ ] **CLI channel 选择** — `pcr start --channel lark|telegram|discord|wechat`
-  - 启动日志去掉硬编码的"飞书"字样，改为通用提示
-  - 新增 `pcr channel` 命令用于配置默认 channel
-  - 详见：`packages/core/src/cli/start.ts`（当前日志全部硬编码为飞书）
+- [x] **CLI channel 选择** — `pcr start --channel lark`，启动日志去掉硬编码"飞书"字样，改为通用提示
 
 - [ ] **飞书卡片知识库文档整理** — 将 `docs/10-feishu-card-sdk-guide.md` 的经验进一步结构化，便于其他 agent/同事接力（低优先级）
 

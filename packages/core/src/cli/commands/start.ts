@@ -1,7 +1,8 @@
 import { Command } from 'commander'
 import { spawnSync } from 'node:child_process'
 import type { ExecutorConfig } from '@pocket-relay/types'
-import { LarkChannel } from '@pocket-relay/channel'
+import { SUPPORTED_CHANNELS, CHANNEL_REQUIRED_CONFIG, createChannel } from '@pocket-relay/channel'
+import type { ChannelType } from '@pocket-relay/channel'
 import { ClaudeCodeExecutor, ClaudeCodeAcpExecutor } from '@pocket-relay/executor'
 import { Daemon } from '../../daemon'
 import { colors, logInfo, logSuccess, logError } from '../../logger'
@@ -17,6 +18,7 @@ export function registerStartCommand(program: Command): void {
     .option('--claude-cwd <path>', 'Claude Code 工作目录')
     .option('--task-timeout-ms <ms>', '任务超时时间（毫秒）')
     .option('--executor-mode <mode>', '执行器模式：spawn（默认）或 acp（交互模式）', 'spawn')
+    .option('--channel <type>', '通信通道类型：lark（默认）', 'lark')
     .action(startAction)
 }
 
@@ -26,10 +28,24 @@ async function startAction(options: any) {
   const localConfig = loadLocalConfig(cwd)
   const config = mergeConfig(globalConfig, localConfig, options)
 
-  // 验证必填配置
-  if (!config.larkAppId || !config.larkAppSecret) {
+  const claudeBin = config.claudeBin!
+  const claudeCwd = config.claudeCwd ?? cwd
+  const timeoutMs = config.taskTimeoutMs!
+  const executorMode: string = options.executorMode ?? 'spawn'
+  const channelType = (options.channel ?? 'lark') as ChannelType
+
+  // 检查 channel 是否支持（由 channel 包统一维护列表）
+  if (!SUPPORTED_CHANNELS.includes(channelType)) {
+    logError(`通道 "${channelType}" 暂未实现，当前支持：${SUPPORTED_CHANNELS.join(', ')}`)
+    process.exit(1)
+  }
+
+  // 验证该 channel 的必填配置（由 channel 包统一声明所需字段）
+  const requiredKeys = CHANNEL_REQUIRED_CONFIG[channelType]
+  const missingKeys = requiredKeys.filter(k => !config[k as keyof typeof config])
+  if (missingKeys.length > 0) {
     console.log('')
-    logError('缺少飞书配置')
+    logError(`缺少 ${channelType} 配置: ${missingKeys.join(', ')}`)
     console.log('')
     console.log('  请用以下任一方式配置:')
     console.log('')
@@ -44,11 +60,6 @@ async function startAction(options: any) {
     console.log('')
     process.exit(1)
   }
-
-  const claudeBin = config.claudeBin!
-  const claudeCwd = config.claudeCwd ?? cwd
-  const timeoutMs = config.taskTimeoutMs!
-  const executorMode: string = options.executorMode ?? 'spawn'
 
   // 检查 claude 安装（spawn 模式才需要）
   function checkClaudeInstallation(bin: string): boolean {
@@ -79,12 +90,9 @@ async function startAction(options: any) {
     logSuccess('Claude Code 已就绪')
   }
 
-  // 初始化组件
-  logInfo('初始化飞书连接...')
-  const channel = new LarkChannel({
-    appId: config.larkAppId!,
-    appSecret: config.larkAppSecret!
-  })
+  // 初始化组件（由 channel 包工厂函数统一创建，core 层无需感知具体实现）
+  logInfo(`初始化 ${channelType} 连接...`)
+  const channel = createChannel(channelType, config as unknown as Record<string, string>)
   const executorConfig: ExecutorConfig = {
     claudeBin,
     cwd: claudeCwd,
@@ -98,7 +106,7 @@ async function startAction(options: any) {
 
   const daemon = new Daemon(channel, executor, claudeCwd)
 
-  logInfo('正在连接飞书...')
+  logInfo(`正在连接 ${channelType}...`)
   console.log('')
 
   await daemon.start()
@@ -109,7 +117,7 @@ async function startAction(options: any) {
   console.log('')
   console.log(colors.bold(`  Node ID: ${colors.cyan(daemon.nodeId)}`))
   console.log('')
-  console.log('  在飞书中发送以下命令完成绑定:')
+  console.log('  在 IM 中发送以下命令完成绑定:')
   console.log(colors.yellow(`    /bind ${daemon.nodeId}`))
   console.log('')
   console.log(`  工作目录: ${claudeCwd}`)

@@ -1,5 +1,5 @@
 ---
-name: commit
+name: project-commit
 description: 分析当前 git 变更，生成符合 Conventional Commits 规范的提交。当用户说"帮我提交"、"commit 一下"、"提交代码"或输入 /commit 时触发。
 ---
 

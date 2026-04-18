@@ -8,6 +8,10 @@
 
 ```
 IChannel (接口)
+├── registry.ts (Channel 注册表 + 工厂函数)
+│   ├── SUPPORTED_CHANNELS — 已实现 channel 类型列表
+│   ├── CHANNEL_REQUIRED_CONFIG — 各 channel 必填配置项
+│   └── createChannel() — 工厂函数，按类型创建实例
 └── LarkChannel (飞书 WebSocket 实现)
     ├── 幂等去重 (seenMessageIds)
     ├── 消息分片 (splitMessage)
@@ -69,6 +73,17 @@ class TelegramChannel implements IChannel {
 ```
 
 ## 关键工作点（接力必读）
+
+### 5. Channel 元数据下沉到 channel 包（registry 模式）
+
+PR #2 review 评论指出：`start.ts` 中存在硬编码的 channel 列表、必填配置校验、`new LarkChannel()` 构造逻辑，导致新增 channel 时必须同时改动 `core` 层。
+
+**解决方案**：将所有 channel 元数据提取到 `src/registry.ts`：
+- `SUPPORTED_CHANNELS` — 已实现类型（类型安全的 `as const` 数组）
+- `CHANNEL_REQUIRED_CONFIG` — 各 channel 的必填配置键名，供 core 层统一校验
+- `createChannel()` — 工厂函数，消除 `core` 层对具体实现类的直接依赖
+
+**收益**：新增 channel 只需修改 `registry.ts` 一处，`start.ts` 零改动。
 
 ### 1. 卡片回调注册方式（已踩坑）
 长连接模式下，卡片按钮回调**必须**在 `EventDispatcher` 里注册 `card.action.trigger`：

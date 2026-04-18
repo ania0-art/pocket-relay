@@ -1,5 +1,5 @@
 ---
-name: pr-create
+name: project-pr-create
 description: 基于当前分支与目标分支的差异，使用 gh CLI 创建 GitHub Pull Request。当用户说"创建 PR"、"提 PR"、"开 PR"、"pr-create"或输入 /pr-create 时触发。
 ---
 

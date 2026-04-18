@@ -148,10 +148,13 @@ The executor layer supports multiple execution modes:
 
 ## Claude Code Skills
 
-项目内置 skills 存放于 `.claude/skills/`，在 Claude Code 中可直接通过 `/skill-name` 触发。
+项目内置 skills 存放于 `.claude/skills/`，在 Claude Code 中可直接通过 `/project-skill-name` 触发。
 
 | Skill | 触发方式 | 说明 |
 |-------|---------|------|
-| `/commit` | "帮我提交"、"commit 一下" | 分析变更，生成 Conventional Commits 格式提交 |
-| `/pr-create` | "创建 PR"、"提 PR" | 基于分支差异生成 PR 标题和描述，用户确认后创建 |
-| `/sync-docs` | "更新文档"、"同步文档" | 根据本次工作内容同步更新 CLAUDE.md、AGENTS.md、README.md、docs/ |
+| `/project-commit` | "帮我提交"、"commit 一下" | 分析变更，生成 Conventional Commits 格式提交 |
+| `/project-pr-create` | "创建 PR"、"提 PR" | 基于分支差异生成 PR 标题和描述，用户确认后创建 |
+| `/project-pr-fix-comments` | "处理 PR 评论"、"fix comments" | 拉取未解决 review 评论，分析问题给出方案，询问用户是否修复 |
+| `/project-sync-docs` | "更新文档"、"同步文档" | 根据本次工作内容同步更新 CLAUDE.md、AGENTS.md、README.md、docs/ |
+| `/project-ts-init` | "初始化 ts 项目"、"新建 ts 项目" | 从零搭建完整 TypeScript Node.js 工程配置 |
+| `/project-ts-audit` | "检查项目配置"、"审计工程配置" | 审计 TS 工程配置，识别缺失项并提出修复方案 |
