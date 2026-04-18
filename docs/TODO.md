@@ -8,7 +8,7 @@
 - [x] **发布到 GitHub** — org: noetikalab，repo: pocket-relay，主干开发 + rebase 工作流，GitHub 已开启 Require linear history
 - [x] **ESLint + Prettier** — 根目录 `eslint.config.js` + `.prettierrc`，职责分工：Prettier 管格式，ESLint 管代码质量
 - [x] **Git hooks** — husky + lint-staged + commitlint，pre-commit 自动 format/lint，commit-msg 校验 Conventional Commits 格式
-- [x] **Claude Code Agent Skills** — 基于 `gh` CLI 制作 `/commit`、`/pr-create` skills，存放到项目 `.claude/skills/`
+- [x] **Claude Code Agent Skills** — 制作 7 个项目级 skill（`project-commit`、`project-pr-create`、`project-pr-fix-comments`、`project-new-branch`、`project-sync-docs`、`project-ts-init`、`project-ts-audit`），存放于 `.claude/skills/`，统一使用 `project-` 前缀以区分用户级 skill
 
 ### 功能规划
 
